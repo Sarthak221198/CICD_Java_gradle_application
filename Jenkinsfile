@@ -39,12 +39,23 @@ pipeline{
                      
                     sh  '''
                         docker build -t 18.213.3.117:8083/springapp:${VERSION} .
-                        docker login -u admin -p admin 18.213.3.117:8083
+                        docker login -u admin -p $nexus-password 18.213.3.117:8083
                         docker push 18.213.3.117:8083/springapp:${VERSION}
                         docker rmi 18.213.3.117:8083/springapp:${VERSION}
                     
                         '''                       
                     
+                }
+            }
+        }
+        stage("identify missconfigs in datree in helm charts"){
+            steps{
+                script{
+                    dir('kubernetes/') {
+                        sh 'helm datree test myapp/'
+
+                    }
+
                 }
             }
         }
