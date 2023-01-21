@@ -36,7 +36,7 @@ pipeline{
         stage("Docker build & docker push"){
             steps{
                 script{
-                     {
+                   
                     sh  '''
                         docker build -t 18.213.3.117:8083/springapp:${VERSION} .
                         docker login -u admin -p admin 18.213.3.117:8083
